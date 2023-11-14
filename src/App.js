@@ -11,7 +11,7 @@ function App() {
 
   useEffect(() => {
     // Fetch data from the endpoint
-    fetch('https://mern-attendance-server.vercel.app/getattendance')
+    fetch('http://localhost:5000/getattendance')
       .then((response) => response.json())
       .then((data) => setAttendanceData(data))
       .catch((error) => console.error('Error fetching attendance data:', error));
