@@ -11,7 +11,7 @@ const ScheduleDropdown = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/subjects');
+        const response = await axios.get('https://mern-attendance-server.vercel.app/subjects');
         setScheduleData(response.data);
       } catch (error) {
         console.error('Error fetching schedule data:', error);
@@ -34,9 +34,9 @@ const ScheduleDropdown = () => {
     try {
       let endpoint;
       if (status === 'yes') {
-        endpoint = `http://localhost:5000/update-attendance-yes/${subject}`;
+        endpoint = `https://mern-attendance-server.vercel.app/update-attendance-yes/${subject}`;
       } else if (status === 'no') {
-        endpoint = `http://localhost:5000/update-attendance-no/${subject}`;
+        endpoint = `https://mern-attendance-server.vercel.app/update-attendance-no/${subject}`;
       }
 
       // Make API call to update attendance
