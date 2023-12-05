@@ -8,7 +8,7 @@ const Landing = () => {
     <div className="container">
       <form>
         <div className="login-header">
-          <h1>WMEN</h1>
+          <h1>StudentHUB</h1>
         </div>
         <div className="form-group">
           <a href="login">
