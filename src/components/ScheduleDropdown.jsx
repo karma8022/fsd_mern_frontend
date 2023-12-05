@@ -1,20 +1,23 @@
 // Import the Tailwind CSS classes
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 
 const ScheduleDropdown = () => {
   const [scheduleData, setScheduleData] = useState([]);
-  const [selectedDay, setSelectedDay] = useState('');
+  const [selectedDay, setSelectedDay] = useState("");
   const [selectedSubjects, setSelectedSubjects] = useState([]);
   const [attendanceStatus, setAttendanceStatus] = useState({});
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get('https://mern-attendance-server.vercel.app/subjects');
+        const response = await axios.get(
+          "https://mern-attendance-server.vercel.app/subjects"
+        );
+        console.log("Response:", response.data); // Log the response data
         setScheduleData(response.data);
       } catch (error) {
-        console.error('Error fetching schedule data:', error);
+        console.error("Error fetching schedule data:", error);
       }
     };
 
@@ -23,7 +26,9 @@ const ScheduleDropdown = () => {
 
   const handleDayChange = (event) => {
     const selectedDayName = event.target.value;
-    const selectedDayObject = scheduleData.find((day) => day.day_name === selectedDayName);
+    const selectedDayObject = scheduleData.find(
+      (day) => day.day_name === selectedDayName
+    );
 
     setSelectedDay(selectedDayName);
     setSelectedSubjects(selectedDayObject ? selectedDayObject.subjects : []);
@@ -33,9 +38,9 @@ const ScheduleDropdown = () => {
   const handleAttendance = async (subject, status) => {
     try {
       let endpoint;
-      if (status === 'yes') {
+      if (status === "yes") {
         endpoint = `https://mern-attendance-server.vercel.app/update-attendance-yes/${subject}`;
-      } else if (status === 'no') {
+      } else if (status === "no") {
         endpoint = `https://mern-attendance-server.vercel.app/update-attendance-no/${subject}`;
       }
 
@@ -44,26 +49,29 @@ const ScheduleDropdown = () => {
         subject_name: subject,
       });
 
-      console.log(response.data); // Log the response if needed
+      console.log(response.data); // Log the response data if needed
 
       // Toggle the attendance status for the subject
       setAttendanceStatus((prevStatus) => ({
         ...prevStatus,
-        [subject]: prevStatus[subject] === status ? '' : status,
+        [subject]: prevStatus[subject] === status ? "" : status,
       }));
     } catch (error) {
-      console.error('Error updating attendance:', error);
+      console.error("Error updating attendance:", error);
     }
   };
 
   const handleSubmitAttendance = () => {
-    console.log('Attendance Status:', attendanceStatus);
+    console.log("Attendance Status:", attendanceStatus);
     setAttendanceStatus({});
   };
 
   return (
     <div className="mx-auto bg-purple-400 mt-10 p-6 rounded-lg shadow-md">
-      <label htmlFor="dayDropdown" className="block text-sm font-medium text-gray-600">
+      <label
+        htmlFor="dayDropdown"
+        className="block text-sm font-medium text-gray-600"
+      >
         Select a day:
       </label>
       <select
@@ -72,7 +80,9 @@ const ScheduleDropdown = () => {
         value={selectedDay}
         className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
       >
-        <option value="" disabled>Select a day</option>
+        <option value="" disabled>
+          Select a day
+        </option>
         {scheduleData.map((day) => (
           <option key={day._id} value={day.day_name}>
             {day.day_name}
@@ -82,21 +92,29 @@ const ScheduleDropdown = () => {
 
       {selectedDay && (
         <div className="mt-4">
-          <h2 className="text-lg font-medium text-gray-900">Subjects for {selectedDay}:</h2>
+          <h2 className="text-lg font-medium text-gray-900">
+            Subjects for {selectedDay}:
+          </h2>
           <ul className="mt-2">
             {selectedSubjects.map((subject) => (
               <li key={subject}>
                 {subject}
                 <button
-                  onClick={() => handleAttendance(subject, 'yes')}
-                  style={{ backgroundColor: attendanceStatus[subject] === 'yes' ? 'green' : 'white' }}
+                  onClick={() => handleAttendance(subject, "yes")}
+                  style={{
+                    backgroundColor:
+                      attendanceStatus[subject] === "yes" ? "green" : "white",
+                  }}
                   className="ml-2 p-2 rounded"
                 >
                   Yes
                 </button>
                 <button
-                  onClick={() => handleAttendance(subject, 'no')}
-                  style={{ backgroundColor: attendanceStatus[subject] === 'no' ? 'red' : 'white' }}
+                  onClick={() => handleAttendance(subject, "no")}
+                  style={{
+                    backgroundColor:
+                      attendanceStatus[subject] === "no" ? "red" : "white",
+                  }}
                   className="ml-2 p-2 rounded "
                 >
                   No

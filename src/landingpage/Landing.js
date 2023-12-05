@@ -1,5 +1,4 @@
 import React from "react";
-import { Link } from "react-router-dom";
 import "./Landing.css"; // Import your CSS file
 
 const Landing = () => {
@@ -10,10 +9,14 @@ const Landing = () => {
         <h1>Student Assistant</h1>
       </header>
       <div className="section-buttons">
-        <button className="button button-primary">InfoFLOW</button>
-        <Link to="/attendance" className="button button-secondary">
-          Attendance Tracker
-        </Link>
+        <button className="button button-primary">
+          <a href="http://localhost:3000/">InfoFLOW</a>
+        </button>
+        <button className="button button-secondary">
+          <a href="https://mern-attendance-client.vercel.app/">
+            Attendance Tracker
+          </a>
+        </button>
       </div>
     </div>
   );
