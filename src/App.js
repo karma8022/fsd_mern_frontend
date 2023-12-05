@@ -1,32 +1,25 @@
-import './App.css';
-import ScheduleDropdown from './components/ScheduleDropdown';
-import AttendanceList from './components/AttendanceList';
-import React, { useEffect, useState } from 'react';
-import { format } from 'date-fns';
+// App.js
+import React from "react";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import MainApp from "./components/MainApp.js";
+import Landing from "./landingpage/Landing.js";
+import Login from "./login/Login.js"; // Import the Login component
+import Signup from "./login/Signup.js"; // Import the Signup component
+import MainLand from "./login/mainlanding.js"; // Import the Signup component
 
-function App() {
-
-  const [attendanceData, setAttendanceData] = useState([]);
-  const [currentDay, setCurrentDay] = useState('');
-
-  useEffect(() => {
-    // Fetch data from the endpoint
-    fetch('https://mern-attendance-server.vercel.app/getattendance')
-      .then((response) => response.json())
-      .then((data) => setAttendanceData(data))
-      .catch((error) => console.error('Error fetching attendance data:', error));
-
-    // Set the current day
-    setCurrentDay(format(new Date(), 'EEEE, do MMMM'));
-  }, []);
-
+const App = () => {
   return (
-    <div className="App">
-      <h2 className='font-bold text-4xl'>Attendance for {currentDay}</h2>
-      <ScheduleDropdown/>
-      <AttendanceList attendanceData={attendanceData} />
-    </div>
+    <Router>
+      <Routes>
+        <Route path="/attendance" element={<MainApp />} />
+        <Route path="/login" element={<Login />} /> {/* Add the Login route */}
+        <Route path="/signup" element={<Signup />} />{" "}
+        {/* Add the Signup route */}
+        <Route path="/landing" element={<Landing />} />
+        <Route path="/fsd" element={<MainLand />} />
+      </Routes>
+    </Router>
   );
-}
+};
 
 export default App;
